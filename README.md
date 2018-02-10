@@ -10,3 +10,9 @@ The popular Python library [`Populus`](http://populus.readthedocs.io/en/latest/q
 
 ## Overview of the Project
 1. 
+
+## Resources
+Here are some links to interesting resources about Ethereum and Smart Contracts
+[Solidity Readme and Introduction](https://solidity.readthedocs.io/en/develop/)
+[Ethereum Readme](http://www.ethdocs.org/en/latest/)
+[Populus Readme](https://github.com/ethereum/populus)
