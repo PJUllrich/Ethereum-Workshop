@@ -9,7 +9,9 @@ The popular Python library [`Populus`](http://populus.readthedocs.io/en/latest/q
 1. Create a new Virtual Environment with Python 3.5 or later. [This article](http://docs.python-guide.org/en/latest/dev/virtualenvs/#lower-level-virtualenv) explains how.
 1. Activate your Virtual Environment as described in the article.
 1. Install all requirements with `pip install -r requirements.txt`
-1. Create a new Populus project with `populus init`
+1. Start the local Ethereum network with `testrpc -s 0`. The `-s 0` part will give you always the same addresses, which is handy for testing. 
+1. Run `populus compile`. You should the compiled contract in the folder `/build`
+1. Run the tests with `py.test tests`. 
 
 ## Overview of the Project
 1. 
@@ -19,3 +21,4 @@ Here are some links to interesting resources about Ethereum and Smart Contracts
 * [Solidity Readme and Introduction](https://solidity.readthedocs.io/en/develop/)
 * [Ethereum Readme](http://www.ethdocs.org/en/latest/)
 * [Populus Readme](http://populus.readthedocs.io/en/latest/)
+* [Web3Py Readme](https://web3py.readthedocs.io/en/stable/)
