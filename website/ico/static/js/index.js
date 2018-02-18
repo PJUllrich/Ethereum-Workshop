@@ -1,4 +1,4 @@
-var contractABI = [
+const contractABI = [
     {
         "constant": true,
         "inputs": [],
@@ -35,6 +35,20 @@ var contractABI = [
     {
         "constant": true,
         "inputs": [],
+        "name": "getBuyersLength",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
         "name": "owner",
         "outputs": [
             {
@@ -58,20 +72,6 @@ var contractABI = [
         ],
         "payable": true,
         "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "buyersLength",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -118,9 +118,9 @@ var contractABI = [
     }
 ];
 
-var contractAddress = "0xc305c901078781C232A2a521C2aF7980f8385ee9";
-var contract;
-var account;
+const contractAddress = "0xc305c901078781C232A2a521C2aF7980f8385ee9";
+let contract;
+let account;
 
 window.addEventListener('load', function () {
 
@@ -158,13 +158,14 @@ function updateActiveBalance() {
         if (err) {
             console.error('Error in getBalance: ' + err);
         } else {
-            document.getElementById('activeBalance').innerHTML = res.toNumber();
+            let amount = res.toNumber() / (10e17);
+            document.getElementById('activeBalance').innerHTML = amount + ' Eth';
         }
     });
 }
 
 function updateActiveContract() {
-    var content;
+    let content;
     if (typeof contract !== 'undefined') {
         content = contract.address;
     } else {
@@ -174,37 +175,61 @@ function updateActiveContract() {
 }
 
 function updateBalances() {
-    contract.buyersLength(function (err, res) {
+    contract.getBuyersLength(function (err, res) {
         if (err) {
-            console.error('Error in buyersLength: ' + err);
+            console.error('Error in getBuyers: ' + err);
         } else {
-            var arraySize = res.toNumber();
-            var table = document.getElementById('balanceTable').getElementsByTagName('tbody')[0];
+            console.log('Count of Buyers: ' + res);
 
-            for (var i = 0; i < arraySize; i++) {
-                var address = contract.buyers(i);
-                var balance = contract.balances(address);
-
-                var newRow = table.insertRow();
-                newRow.insertCell(0).innerHTML(address);
-                newRow.insertCell(1).innerHTML(balance);
+            if (res.length <= 0) {
+                console.log('There are no buyers yet.');
+                return;
             }
+
+            // let arraySize = res.toNumber();
+            // let table = document.getElementById('balanceTable').getElementsByTagName('tbody')[0];
+            //
+            // for (let i = 0; i < arraySize; i++) {
+            //     let address = contract.buyers(i);
+            //     let balance = contract.balances(address);
+            //
+            //     let newRow = table.insertRow();
+            //     newRow.insertCell(0).innerHTML(address);
+            //     newRow.insertCell(1).innerHTML(balance);
+            // }
         }
     })
 }
 
 function buy() {
-    var amount = document.getElementById('buyAmountInput').value;
-    if (!amount > 0) {
+    let input = document.getElementById('buyAmountInput').value;
+    if (!input > 0) {
         console.error('You have to specify an amount of ETH you want to send!');
         return;
     }
+    let amount = w3.toWei(input, 'ether');
+    console.log('Going to buy Coins for ' + amount + ' Wei');
 
-    contract.buy({'value': amount}, function(err, res) {
+    contract.buy({'value': amount}, function (err, res) {
         if (err) {
             console.error('Error in buyersLength: ' + err);
         } else {
-            console.log(res)
+            console.log('Transaction created: ' + res);
+            updateActiveBalance();
+
+            waitForReceipt(res, updateBalances);
         }
     })
+}
+
+async function waitForReceipt(txId, callback) {
+    w3.eth.getTransactionReceipt(txId, function (err, res) {
+        if (err) {
+            console.error('Error in getTransactionReceipt: ' + err)
+        } else {
+            console.log('Coins were bought successfully!');
+
+            callback();
+        }
+    });
 }

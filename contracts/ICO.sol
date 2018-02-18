@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.19;
 
 contract ICO {
     address public owner;
@@ -13,15 +13,14 @@ contract ICO {
         owner = msg.sender;
     }
 
-    function buyersLength() public constant returns (uint) {
+    function getBuyersLength() public constant returns (uint) {
         return buyers.length;
     }
 
-    function buy() public payable returns (uint) {
+    function buy() public payable {
         uint coins = msg.value * MULTIPLIER;
         balances[msg.sender] += coins;
         buyers.push(msg.sender);
-
         Bought(msg.sender, coins);
     }
 }
