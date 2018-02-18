@@ -19,6 +19,10 @@
                 <thead></thead>
                 <tbody>
                 <tr>
+                    <td>Current Contract:</td>
+                    <td id="activeContract"></td>
+                </tr>
+                <tr>
                     <td>Current Account:</td>
                     <td id="activeAccount"></td>
                 </tr>
@@ -28,7 +32,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-primary">Buy Coins</button>
+                        <button type="button" class="btn btn-primary" onclick="buy()">
+                            Buy Coins
+                        </button>
                     </td>
                     <td>
                         <input class="form-control"
@@ -40,11 +46,13 @@
             </table>
         </div>
         <div class="col-8 d-flex justify-content-center">
-            <table class="table">
+            <table class="table" id="balanceTable">
                 <thead>
                 <tr>
                     <th>
-                        <button type="button" class="btn btn-primary">Retrieve Balances
+                        <button type="button" class="btn btn-primary"
+                                onclick="updateBalances()">
+                            Retrieve Balances
                         </button>
                     </th>
                 </tr>

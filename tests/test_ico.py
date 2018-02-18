@@ -1,15 +1,14 @@
-import asyncio
 import random
 
 
-def async(f):
-    def wrapper(*args, **kwargs):
-        coro = asyncio.coroutine(f)
-        future = coro(*args, **kwargs)
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(future)
+def test_owner(chain):
+    owner_should_be = chain.web3.eth.coinbase
 
-    return wrapper
+    contract, deploy_tx_id = chain.provider.get_or_deploy_contract('ICO')
+
+    owner_is = contract.call().owner()
+
+    assert owner_should_be == owner_is
 
 
 def test_buy(chain):
@@ -49,14 +48,3 @@ def test_bought_event(chain):
     # Check that the Bought event was received
     events_after = watcher.get()
     assert len(events_after) == 1
-
-
-def test_bought_watch(chain):
-    contract, deploy_tx_id = chain.provider.get_or_deploy_contract('ICO')
-    watcher = contract.on('Bought')
-    test_value = random.randint(1, 1000)
-
-    watcher.watch(lambda event: print('Hallo'))
-    tx_id = contract.transact({'value': test_value}).buy()
-    receipt = chain.wait.for_receipt(tx_id)
-    print(receipt)
