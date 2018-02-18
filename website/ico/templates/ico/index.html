@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ethereum Workshop</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4 d-flex justify-content-center">
+            <table class="table">
+                <thead></thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-primary">Create Account
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-primary">Buy Coins</button>
+                    </td>
+                    <td>
+                        <input class="form-control"
+                               id="buyAmountInput"
+                               placeholder="Enter Amount of ETH to send">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-8 d-flex justify-content-center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        <button type="button" class="btn btn-primary">Retrieve Balances
+                        </button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/web3.min.js' %}"></script>
+</html>
