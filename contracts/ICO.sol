@@ -17,10 +17,15 @@ contract ICO {
         return buyers.length;
     }
 
+    function getBuyerAt(uint index) public constant returns (address) {
+        return buyers[index];
+    }
+
     function buy() public payable {
         uint coins = msg.value * MULTIPLIER;
         balances[msg.sender] += coins;
         buyers.push(msg.sender);
+
         Bought(msg.sender, coins);
     }
 }
