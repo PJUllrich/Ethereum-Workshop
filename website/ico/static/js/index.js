@@ -224,19 +224,33 @@ function updateBalances() {
                 return;
             }
 
+            emptyTable();
+
             let arraySize = res.toNumber();
             let table = document.getElementById('balanceTable').getElementsByTagName('tbody')[0];
+            let addressSet = new Set();
 
             for (let i = 0; i < arraySize; i++) {
                 let address = contract.getBuyerAt(i);
                 let balance = contract.balances(address);
 
-                let newRow = table.insertRow();
-                newRow.insertCell(0).innerHTML = address;
-                newRow.insertCell(1).innerHTML = balance;
+                if (!addressSet.has(address)) {
+                    addressSet.add(address);
+
+                    let newRow = table.insertRow();
+                    newRow.insertCell(0).innerHTML = address;
+                    newRow.insertCell(1).innerHTML = w3.fromWei(balance, 'kether');
+                    newRow.insertCell(2);
+                }
             }
         }
     })
+}
+
+function emptyTable() {
+    let tbody_old = document.getElementById('balanceTable').getElementsByTagName('tbody')[0];
+    let tbody_new = document.createElement('tbody');
+    tbody_old.parentNode.replaceChild(tbody_new, tbody_old);
 }
 
 function buy() {

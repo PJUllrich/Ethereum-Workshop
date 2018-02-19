@@ -23,6 +23,7 @@ contract ICO {
 
     function buy() public payable {
         uint coins = msg.value * MULTIPLIER;
+
         balances[msg.sender] += coins;
         buyers.push(msg.sender);
 
