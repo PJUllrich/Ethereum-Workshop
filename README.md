@@ -6,19 +6,27 @@ The popular Python library [`Populus`](http://populus.readthedocs.io/en/latest/q
 1. Clone this project into a new folder on your machine
 1. Install all `System Dependencies`, which are stated [in this article](http://populus.readthedocs.io/en/latest/quickstart.html#system-dependencies)
 1. Install the `Solidity Compiler` as explained [in this article](http://solidity.readthedocs.io/en/latest/installing-solidity.html#installing-the-solidity-compiler)
-1. Install `geth` as described [here](https://geth.ethereum.org/downloads/)
 1. Create a new `Virtual Environment` with Python 3.5 or later. [This article](http://docs.python-guide.org/en/latest/dev/virtualenvs/#lower-level-virtualenv) explains how.
 1. Activate your Virtual Environment as described in the article.
 1. Install all requirements with `pip install -r requirements.txt`
-1. Start the local Ethereum network with ``
 1. Run `populus compile`. You should the compiled contract in the folder `/build`
 1. Run the tests with `py.test tests`.
 
 ## How to run the project
-1. Run the local chain
-1. Deploy contract to the local chain
+1. Run the local chain with `testrpc --seed 0`
 1. Run Django server with `python manage.py runserver`
 1. In your browser, go to [`http://localhost:8000`](http://localhost:8000)
+1. Open the `Inspector` in your browser. Here's how to do that in [Chrome](https://developer.chrome.com/devtools) or [Firefox](https://developer.mozilla.org/en-US/docs/Tools/Page_Inspector/How_to/Open_the_Inspector).
+1. Go to `Console` in the Inspector. You should see some info about what's happening.
+
+## Where to write your functionality
+* Any Smart Contract functionality can be written into `contracts/ICO.sol`
+    * After you wrote your functionality, run `populus compile`
+    * Then add the `abi` value from `build/contracts.json` to the `contractABI` in `website/ico/static/js/index.js`
+    * Add the `bytecode` value from `build/contracts.json` to the `contractBytecode`, also in `website/ico/static/js/index.js`
+* Any Frontend functionality can be written into `website/ico/static/js/index.js`
+    * Once you added your functionality, just refresh your website at `localhost:8000`.
+    * I recommend to access the website in the Incognito mode of your browser. This way, your browser won't load the website from cache, but take it from your project.
 
 ## Challenges
 The goal of the workshop is to get an understanding of how to write and deploy Smart Contracts.
@@ -40,8 +48,3 @@ Here are some links to interesting resources about Ethereum and Smart Contracts
 * [Ethereum Readme](http://www.ethdocs.org/en/latest/)
 * [Populus Readme](http://populus.readthedocs.io/en/latest/)
 * [Web3Py Readme](https://web3py.readthedocs.io/en/stable/)
-
-# Add
-1. Install geth
-1. How to check in browser console
-1. How to log in using MetaMask
