@@ -33,7 +33,7 @@ pylru==1.0.9
 pysha3==1.0.2
 pytest==3.4.0
 pytz==2018.3
-PyYAML==3.12
+PyYAML==5.4
 repoze.lru==0.7
 requests==2.18.4
 rlp==0.6.0
